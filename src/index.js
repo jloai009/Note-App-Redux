@@ -5,7 +5,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { Provider } from 'react-redux'
 import App from './App'
 
-import noteReducer from './reducers/noteReducer'
+import noteReducer, { initializeNotes } from './reducers/noteReducer'
 import filterReducer from './reducers/filterReducer'
 
 import noteService from './services/notes'
@@ -21,9 +21,7 @@ const store = createStore(
 )
 
 noteService.getAll().then(notes =>
-  notes.forEach(note => {
-    store.dispatch({ type: 'NEW_NOTE', data: note})
-  })
+  store.dispatch(initializeNotes(notes))
 )
 
 ReactDOM.render(
