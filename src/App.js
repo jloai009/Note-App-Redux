@@ -9,8 +9,7 @@ import { useDispatch } from 'react-redux'
 const App = () => {
   const dispatch = useDispatch()
   useEffect(() => {
-    noteService
-      .getAll().then(notes => dispatch(initializeNotes(notes)))
+    dispatch(initializeNotes())
   }, [dispatch])
 
   return (
