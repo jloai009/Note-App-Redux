@@ -2,6 +2,8 @@ const noteReducer = (state = [], action) => {
   switch (action.type) {
     case 'NEW_NOTE':
       return [...state, action.data]
+    case 'INIT_NOTES':
+      return action.data
     case 'TOGGLE_IMPORTANCE': {
       const id = action.data.id
       const noteToChange = state.find(n => n.id === id)
@@ -15,6 +17,13 @@ const noteReducer = (state = [], action) => {
     }
     default:
       return state
+  }
+}
+
+export const initializeNotes = (notes) => {
+  return {
+    type: 'INIT_NOTES',
+    data: notes,
   }
 }
 
