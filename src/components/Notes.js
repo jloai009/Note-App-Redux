@@ -12,20 +12,22 @@ const Note = ({ note, handleClick }) => {
   )
 }
 
-const Notes = () => {
+const Notes = (props) => {
   const dispatch = useDispatch()
-  const notes = useSelector(({ filter, notes }) => {
-    if (filter === 'ALL') {
-      return notes
+
+  const notesToShow = () => {
+    if (props.filter === 'ALL') {
+      return props.notes
     }
-    return filter === 'IMPORTANT'
-      ? notes.filter(note => note.important)
-      : notes.filter(note => !note.important)
-  })
+
+    return props.filter === 'IMPORTANT'
+      ? props.notes.filter(note => note.important)
+      : props.notes.filter(note => !note.important)
+  }
 
   return (
     <ul>
-      {notes.map(note =>
+      {notesToShow().map(note =>
         <Note
           key={note.id}
           note={note}
@@ -38,5 +40,12 @@ const Notes = () => {
   )
 }
 
-const ConnectedNotes = connect()(Notes)
+const mapStateToProps = (state) => {
+  return {
+    notes: state.notes,
+    filter: state.filter,
+  }
+}
+
+const ConnectedNotes = connect(mapStateToProps)(Notes)
 export default ConnectedNotes
